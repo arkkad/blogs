@@ -1,0 +1,30 @@
+<div class="dijitDialog appConfirmDialog" role="dialog" aria-labelledby="${id}_title">
+    <div data-dojo-attach-point="titleBar" class="dijitDialogTitleBar">
+        <span data-dojo-attach-point="titleNode" class="dijitDialogTitle" id="${id}_title" role="heading"
+              level="1"></span>
+        <span data-dojo-attach-point="closeButtonNode" class="dijitDialogCloseIcon"
+              data-dojo-attach-event="ondijitclick: onCancel" title="${buttonCancel}" role="button" tabindex="0">
+            <span data-dojo-attach-point="closeText" class="closeText" title="${buttonCancel}">x</span>
+        </span>
+    </div>
+    <div class="dijitDialogPaneContent">
+        <div data-dojo-attach-point="containerNode">
+            <div data-dojo-attach-point="loginForm" data-dojo-type="dijit/form/Form" enctype="multipart/form-data"
+                 action="" method="POST">
+                <div data-dojo-type="dojox/layout/TableContainer" data-dojo-props="cols:1">
+                    <div data-dojo-type="dijit/form/TextBox"
+                         data-dojo-props="regExp:'^\s+$', invalidMessage:'Блог не может состоять из пробелов.'"
+                         id="textForAddingInBlog" title="Текст поста:" name="text" value="" style="height: 15em;"
+                    ></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="appDialogPaneButtons">
+        <button data-dojo-type="dijit/form/Button" type="button" role="button"
+                data-dojo-attach-event="onClick: onSubmit">Добавить!
+        </button>
+        <button data-dojo-attach-point="closeText" class="closeText" title="${buttonCancel}">Отмена</button>
+    </div>
+</div>
+

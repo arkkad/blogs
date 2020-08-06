@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <title>Blogs</title>
+    <link rel="shortcut icon" href="../favicon.png"/>
+    <link rel="stylesheet" href="../reset.css"/>
+    <link rel="stylesheet" href="https://dojotoolkit.org/reference-guide/1.10/_static/js/dijit/themes/claro/claro.css"/>
+    <link rel="stylesheet"
+          href="https://dojotoolkit.org/reference-guide/1.10/_static/js/dojox/grid/enhanced/resources/claroEnhancedGrid.css"/>
+    <link rel="stylesheet" href="app/theme/main.css"/>
+    <script type="text/javascript">
+        // Configure application.
+        appConfig = {
+            // Get base url from current url.
+            baseUrl: location.href.substring(0, location.href.lastIndexOf("/") + 1)
+        };
+
+        // Configure Dojo.
+        dojoConfig = {
+            parseOnLoad: true
+        };
+    </script>
+    <script src="//ajax.googleapis.com/ajax/libs/dojo/1.14.1/dojo/dojo.js"></script>
+    <script type="text/javascript">
+        // Load application.
+        require(
+            {
+                packages: [
+                    {name: 'app', location: appConfig.baseUrl + 'app/'}
+                ]
+            },
+            [
+                "app"
+            ]
+        );
+    </script>
+
+    <script type="text/javascript">
+
+    </script>
+</head>
+<body class="claro">
+<h1>Добро пожаловать в Блоги!</h1>
+<script type="text/javascript">
+    require(["dojo/dom", "dojo/request", "dojo/json",
+            "dojo/_base/array", "dojo/domReady!"],
+        function (dom, request, JSON, arrayUtil) {
+            // Results will be displayed in resultDiv
+            var resultDiv = dom.byId("resultDiv");
+
+            // Request the JSON data from the server
+            request.get("http://localhost:8080/api/v1/getBlogs", {
+                // Parse data from JSON to a JavaScript object
+                handleAs: "json"
+            }).then(function (data) {
+                    console.log(data);
+                    var html = "В данном блоге постов нет. Добавьте новый пост.";
+
+                    if(data.content.length > 0) {
+                        html = "";
+                        arrayUtil.forEach(data.content, function (data, i) {
+                            html += "<label>" + data.createdDate + "</label>" +
+                                "<h3>" + data.text + "</h3>";
+                        });
+                        html += "</dl>";
+                    }
+                    localStorage.setItem("currPage", data.number)
+                    localStorage.setItem("totalPages", data.totalPages)
+                    resultDiv.innerHTML = html;
+                    // Display the data sent from the server
+                },
+                function (error) {
+                    // Display the error returned
+                    resultDiv.innerHTML = error;
+                });
+        }
+    );
+</script>
+<button id="btnClickMe" data-dojo-type="dijit/form/Button" type="button" role="button">[Новый пост]</button>
+<div id="resultDiv"></div>
+<button  id="btnClickBack"  data-dojo-type="dijit/form/Button" type="button" role="button"><- Назад</button>
+<button  id="btnClickNext"  data-dojo-type="dijit/form/Button" type="button" role="button">Далее -></button>
+</body>
+</html>
