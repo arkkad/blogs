@@ -86,15 +86,15 @@
     <profiles>
         <profile>
             <id>hsql</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <database.url>jdbc:hsqldb:mem:blogsdb</database.url>
             </properties>
         </profile>
         <profile>
             <id>postgres</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <properties>
                 <database.url>jdbc:postgresql://localhost/blogs</database.url>
             </properties>
